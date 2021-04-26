@@ -29,8 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         User::laratrustObserve(UserObserver::class);
 
-        Inertia::share([
-            'errors' => function () {
+        Inertia::share(['errors' => function () {
                 return Session::get('errors')
                     ? Session::get('errors')->getBag('default')->getMessages()
                     : (object) [];
@@ -42,8 +41,5 @@ class AppServiceProvider extends ServiceProvider
                 'message' => Session::get('message'),
             ];
         });
-
-        Inertia::share('mis', 111);
-
     }
 }

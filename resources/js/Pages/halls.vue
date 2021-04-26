@@ -1,20 +1,20 @@
 <template>
-    <app-layout>
+    <app-layout :event="event" :form="form" :data="data">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Manage hall - (Laravel 8 Inertia JS CRUD with Jetstream & Tailwind CSS )
+                Manage Enrolment - (Laravel 8 Inertia JS CRUD with Jetstream & Tailwind CSS )
             </h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-                    <!-- flashes: {{ $page.props.flash.message }} 22222222 errors: -->
-                    <!-- <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert" v-if="$page.props.errors"  key="new_p">
-                        {{ $page.props.errors }}
-                    </div> -->
-                    <!-- {{ $page.flash.message }} 222 -->
-                    <div v-if="$page.props.errors" >
-                    {{ $page.props.errors }}
+
+                    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert" v-if=" Object.keys($page.props.errors ).length > 0 ">
+                      <div class="flex">
+                        <div>
+                          <p class="text-sm">{{ $page.props.errors }}</p>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert" v-if="$page.props.flash.message">
@@ -52,7 +52,8 @@
                                     </td>
                                 <td class="border px-4 py-2">
 
-<inertia-link :href="row.attachment">download file</inertia-link>
+<a v-if="row.attachment" :href="'storage/'+row.attachment" download  target="_blank">download file</a>
+
                                     </td>
                                 <td class="border px-4 py-2">{{ row.first }}</td>
                                 <td class="border px-4 py-2">{{ row.mid }}</td>
@@ -134,16 +135,6 @@
 
                                       <div v-if="$page.props.errors.attachment" class="text-red-500">{{ $page.props.errors.attachment }}</div>
                                   </div>
-
-
-
-
-
-
-
-
-
-
                             </div>
                           </div>
                           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -175,22 +166,6 @@
     </app-layout>
 </template>
 <script>
-
-    // var app = new Vue({
-    //    el: '#app',
-
-    //    data(){
-    //         return {
-    //             sort:'',
-    //         }
-    //     },
-    //     methods: {
-    //         filter() {
-    //           var data = this.sort;
-    //           console.log(data);
-    //       }
-    //     },
-    // }) ;
 
     import AppLayout from './../Layouts/AppLayout'
     import Welcome from './../Jetstream/Welcome'
@@ -235,8 +210,6 @@
                     mid:null,
                     attachment:null,
                 }
-          //      location.reload();
-
             },
             save: function (data) {
                 this.$inertia.post('/halls', data)

@@ -13,6 +13,9 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $this->assertTrue(true);
+        $response = $this->call('GET', '/');
+
+        $this->assertEquals(200, $response->status());
+      //  $this->assertTrue(true);
     }
 }
